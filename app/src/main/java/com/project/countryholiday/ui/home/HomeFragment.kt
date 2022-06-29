@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,14 +15,15 @@ import com.project.countryholiday.R
 import com.project.countryholiday.databinding.FragmentHomeBinding
 import com.project.countryholiday.model.Country
 import com.project.countryholiday.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
 
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModels<HomeViewModel>()
 
     private val countryAdapter by lazy {
         CountryAdapter(onItemClick = {

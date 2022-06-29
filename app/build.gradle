@@ -4,6 +4,14 @@ plugins {
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
+    id("dagger.hilt.android.plugin")
+}
+
+def getApiKey() {
+    def keysProperties = new Properties()
+    keysProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+    def ApiKey = keysProperties.getProperty("m3o_api_key", "")
+    return ApiKey
 }
 
 android {
@@ -20,9 +28,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "M3O_API_KEY", getApiKey())
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "M3O_API_KEY", getApiKey())
         }
     }
     compileOptions {
@@ -53,7 +65,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
-    implementation "io.insert-koin:koin-android:3.1.5"
+    implementation "com.google.dagger:hilt-android:2.41"
+    kapt "com.google.dagger:hilt-compiler:2.41"
     implementation "com.jakewharton.timber:timber:5.0.1"
     testImplementation "junit:junit:4.13.2"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"

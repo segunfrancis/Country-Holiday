@@ -4,10 +4,11 @@ import com.project.countryholiday.data.HolidayService
 import com.project.countryholiday.model.BaseCountryResponse
 import com.project.countryholiday.model.BaseHolidayResponse
 import com.project.countryholiday.model.HolidayRequest
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class HolidayRepositoryImpl(
+class HolidayRepositoryImpl @Inject constructor(
     private val api: HolidayService,
     private val dispatcher: CoroutineDispatcher
 ) : HolidayRepository {

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -13,17 +14,26 @@ import com.project.countryholiday.R
 import com.project.countryholiday.databinding.FragmentHolidaysBinding
 import com.project.countryholiday.model.Holiday
 import com.project.countryholiday.util.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
+@AndroidEntryPoint
 class HolidayFragment : Fragment(R.layout.fragment_holidays) {
 
     private val binding by viewBinding(FragmentHolidaysBinding::bind)
 
     private val args by navArgs<HolidayFragmentArgs>()
 
-    private val viewModel by viewModel<HolidayViewModel> { parametersOf(args.country) }
+    @Inject
+    lateinit var factory: HolidayViewModel.HolidayViewModelFactory
+
+    private val viewModel by viewModels<HolidayViewModel> {
+        HolidayViewModel.provideViewModelFactory(
+            factory = factory,
+            country = args.country
+        )
+    }
 
     private val holidayAdapter by lazy { HolidayAdapter() }
 

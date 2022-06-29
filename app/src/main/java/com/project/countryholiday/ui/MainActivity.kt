@@ -7,7 +7,9 @@ import androidx.navigation.NavHost
 import com.project.countryholiday.R
 import com.project.countryholiday.databinding.ActivityMainBinding
 import com.project.countryholiday.model.Country
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController

@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.project.countryholiday.R
 import com.project.countryholiday.databinding.FragmentLoginBinding
 import com.project.countryholiday.util.enabled
 import com.project.countryholiday.util.viewBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
 
-    private val viewModel by viewModel<LoginViewModel>()
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
