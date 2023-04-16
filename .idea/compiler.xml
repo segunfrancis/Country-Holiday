@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="Country_Holiday.app" target="11" />
       <module name="Country_Holiday.common" target="11" />
+      <module name="Country_Holiday.feature.auth" target="11" />
       <module name="Country_Holiday.feature.details" target="11" />
       <module name="Country_Holiday.feature.home" target="11" />
       <module name="Country_Holiday.shared" target="11" />

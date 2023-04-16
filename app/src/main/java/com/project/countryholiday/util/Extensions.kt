@@ -19,20 +19,3 @@ fun Throwable.handleThrowable(): String {
     }
 }
 
-fun View.enabled(value: Boolean) {
-    if (value) {
-        alpha = 1F
-        isEnabled = true
-    } else {
-        alpha = 0.4F
-        isEnabled = false
-    }
-}
-
-fun String.isValidEmail(): Boolean {
-    return Patterns.EMAIL_ADDRESS.matcher(this).matches()
-}
-
-fun String.isValidPassword(): Boolean {
-    return this.length >= 6
-}

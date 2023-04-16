@@ -6,7 +6,9 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.segunfrancis.home.R
 import com.segunfrancis.home.databinding.FragmentHomesBinding
@@ -14,6 +16,7 @@ import com.segunfrancis.home.model.CountryHome
 import com.segunfrancis.shared.extension.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_homes) {
@@ -35,19 +38,21 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
     }
 
     private fun setupObservers() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collectLatest {
-                when (it) {
-                    is HomeViewModel.HomeState.Error -> {
-                        handleError(errorMessage = it.errorMessage)
-                        handleLoading(isLoading = false)
+        lifecycle.coroutineScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest {
+                    when (it) {
+                        is HomeViewModel.HomeState.Error -> {
+                            handleError(errorMessage = it.errorMessage)
+                            handleLoading(isLoading = false)
+                        }
+                        HomeViewModel.HomeState.Loading -> handleLoading(isLoading = true)
+                        is HomeViewModel.HomeState.Success -> {
+                            setupCountriesList(it.countries)
+                            handleLoading(isLoading = false)
+                        }
+                        HomeViewModel.HomeState.Idle -> {  }
                     }
-                    HomeViewModel.HomeState.Loading -> handleLoading(isLoading = true)
-                    is HomeViewModel.HomeState.Success -> {
-                        setupCountriesList(it.countries)
-                        handleLoading(isLoading = false)
-                    }
-                    HomeViewModel.HomeState.Idle -> {  }
                 }
             }
         }

@@ -3,26 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/nav_auth">
 
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.project.countryholiday.ui.auth.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/toHomeFragment"
-            app:destination="@id/nav_home" />
-    </fragment>
-<!--    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.project.countryholiday.ui.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/toHolidayFragment"
-            app:destination="@id/holidayFragment" />
-    </fragment>-->
     <fragment
         android:id="@+id/holidayFragment"
         android:name="com.project.countryholiday.ui.holidays.HolidayFragment"
@@ -34,4 +16,9 @@
     </fragment>
 
     <include app:graph="@navigation/nav_home" />
+    <include app:graph="@navigation/nav_auth" />
+
+    <action
+        android:id="@+id/toHomeFragment"
+        app:destination="@id/nav_home" />
 </navigation>

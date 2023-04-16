@@ -50,6 +50,7 @@ kapt {
 }
 
 dependencies {
+    implementation project(path: ":feature:auth")
     implementation project(path: ":feature:home")
     implementation project(path: ":feature:details")
     implementation project(path: ":library:local")

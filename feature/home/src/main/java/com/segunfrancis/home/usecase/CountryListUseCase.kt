@@ -1,7 +1,7 @@
 package com.segunfrancis.home.usecase
 
 import com.segunfrancis.home.model.CountryHome
-import com.segunfrancis.home.source.DatasourceFactory
+import com.segunfrancis.home.data.DatasourceFactory
 import com.segunfrancis.local.db.entities.CountryLocal
 import com.segunfrancis.remote.models.CountryRemote
 import com.segunfrancis.shared.extension.handleThrowable
