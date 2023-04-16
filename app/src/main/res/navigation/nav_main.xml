@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/toHomeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/nav_home" />
     </fragment>
-    <fragment
+<!--    <fragment
         android:id="@+id/homeFragment"
         android:name="com.project.countryholiday.ui.home.HomeFragment"
         android:label="HomeFragment"
@@ -22,7 +22,7 @@
         <action
             android:id="@+id/toHolidayFragment"
             app:destination="@id/holidayFragment" />
-    </fragment>
+    </fragment>-->
     <fragment
         android:id="@+id/holidayFragment"
         android:name="com.project.countryholiday.ui.holidays.HolidayFragment"
@@ -32,4 +32,6 @@
             android:name="country"
             app:argType="com.project.countryholiday.model.Country" />
     </fragment>
+
+    <include app:graph="@navigation/nav_home" />
 </navigation>

@@ -1,16 +1,16 @@
-package com.project.countryholiday.ui.home
+package com.segunfrancis.home.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.project.countryholiday.R
-import com.project.countryholiday.databinding.ItemCountriesBinding
-import com.project.countryholiday.model.Country
+import com.segunfrancis.home.R
+import com.segunfrancis.home.databinding.ItemCountriesBinding
+import com.segunfrancis.home.model.CountryHome
 
-class CountryAdapter(private val onItemClick: (Country) -> Unit) :
-    ListAdapter<Country, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
+class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
+    ListAdapter<CountryHome, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
         return CountryViewHolder(
@@ -33,19 +33,19 @@ class CountryAdapter(private val onItemClick: (Country) -> Unit) :
             binding.root.setOnClickListener { onItemClick.invoke(currentList[adapterPosition]) }
         }
 
-        fun bind(country: Country) {
+        fun bind(country: CountryHome) {
             binding.countryCode.text = country.code
             binding.countryName.text = country.name
         }
     }
 
     companion object {
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<Country>() {
-            override fun areItemsTheSame(oldItem: Country, newItem: Country): Boolean {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<CountryHome>() {
+            override fun areItemsTheSame(oldItem: CountryHome, newItem: CountryHome): Boolean {
                 return false
             }
 
-            override fun areContentsTheSame(oldItem: Country, newItem: Country): Boolean {
+            override fun areContentsTheSame(oldItem: CountryHome, newItem: CountryHome): Boolean {
                 return false
             }
         }

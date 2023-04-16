@@ -7,20 +7,13 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-def getApiKey() {
-    def keysProperties = new Properties()
-    keysProperties.load(project.rootProject.file("local.properties").newDataInputStream())
-    def ApiKey = keysProperties.getProperty("m3o_api_key", "")
-    return ApiKey
-}
-
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.project.countryholiday"
         minSdk 21
-        targetSdk 31
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -28,13 +21,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField("String", "M3O_API_KEY", getApiKey())
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "M3O_API_KEY", getApiKey())
         }
     }
     compileOptions {
@@ -47,12 +36,23 @@ android {
     buildFeatures {
         viewBinding true
     }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += [
+                    "-Xjvm-default=all",
+            ]
+        }
+    }
 }
 
 dependencies {
+    implementation project(path: ":feature:home")
+    implementation project(path: ":feature:details")
+    implementation project(path: ":library:local")
+    implementation project(path: ":library:remote")
 
     implementation "androidx.core:core-ktx:1.8.0"
-    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.appcompat:appcompat:1.5.0"
     implementation "com.google.android.material:material:1.6.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"

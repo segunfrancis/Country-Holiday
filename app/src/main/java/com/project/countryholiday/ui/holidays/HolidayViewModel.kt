@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class HolidayViewModel @AssistedInject constructor(
+class HolidayViewModel /*@AssistedInject*/ constructor(
     private val repository: HolidayRepository,
-    @Assisted private val country: Country
+    /*@Assisted*/ private val country: Country
 ) : ViewModel() {
 
-    @AssistedFactory
+    /*@AssistedFactory*/
     interface HolidayViewModelFactory {
         fun create(country: Country): HolidayViewModel
     }

@@ -18,14 +18,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
+/*@AndroidEntryPoint*/
 class HolidayFragment : Fragment(R.layout.fragment_holidays) {
 
     private val binding by viewBinding(FragmentHolidaysBinding::bind)
 
     private val args by navArgs<HolidayFragmentArgs>()
 
-    @Inject
+    /*@Inject*/
     lateinit var factory: HolidayViewModel.HolidayViewModelFactory
 
     private val viewModel by viewModels<HolidayViewModel> {

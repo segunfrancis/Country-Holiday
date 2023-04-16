@@ -8,7 +8,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class HolidayRepositoryImpl @Inject constructor(
+class HolidayRepositoryImpl constructor(
     private val api: HolidayService,
     private val dispatcher: CoroutineDispatcher
 ) : HolidayRepository {
