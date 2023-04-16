@@ -1,5 +1,7 @@
 package com.segunfrancis.shared.extension
 
+import android.util.Patterns
+import android.view.View
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import retrofit2.HttpException
@@ -17,4 +19,22 @@ fun Throwable.handleThrowable(): String {
         else -> this.message
             ?: "Sorry, we are currently unable to complete your request. Please try again later"
     }
+}
+
+fun View.enabled(value: Boolean) {
+    if (value) {
+        alpha = 1F
+        isEnabled = true
+    } else {
+        alpha = 0.4F
+        isEnabled = false
+    }
+}
+
+fun String.isValidEmail(): Boolean {
+    return Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+fun String.isValidPassword(): Boolean {
+    return this.length >= 6
 }

@@ -1,4 +1,4 @@
-package com.project.countryholiday.ui.auth
+package com.segunfrancis.auth
 
 import android.os.Bundle
 import android.view.View
@@ -6,17 +6,20 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
-import androidx.navigation.fragment.findNavController
-import com.project.countryholiday.R
-import com.project.countryholiday.databinding.FragmentLoginBinding
-import com.project.countryholiday.util.enabled
-import com.project.countryholiday.util.viewBinding
+import com.segunfrancis.auth.databinding.FragmentLoginBinding
+import com.segunfrancis.shared.extension.enabled
+import com.segunfrancis.shared.extension.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
 
     private val viewModel by viewModels<LoginViewModel>()
+
+    @Inject lateinit var navigator: AuthNavigator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +65,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         viewModel.interaction.asLiveData().observe(viewLifecycleOwner) {
             when (it) {
-                is LoginAction.Navigate -> findNavController().navigate(it.destination)
+                is LoginAction.Navigate -> navigator.navigateToHome(this)
             }
         }
     }

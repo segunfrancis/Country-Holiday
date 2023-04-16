@@ -1,19 +1,21 @@
-package com.project.countryholiday.ui.auth
+package com.segunfrancis.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
-import com.project.countryholiday.util.isValidEmail
-import com.project.countryholiday.util.isValidPassword
+import com.segunfrancis.shared.extension.handleThrowable
+import com.segunfrancis.shared.extension.isValidEmail
+import com.segunfrancis.shared.extension.isValidPassword
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor() : ViewModel() {
 
     private val _interaction = MutableSharedFlow<LoginAction>(replay = 0)
     val interaction: SharedFlow<LoginAction> = _interaction
@@ -22,7 +24,7 @@ class LoginViewModel : ViewModel() {
     private var password = MutableStateFlow("")
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Timber.e(throwable)
+        throwable.handleThrowable()
     }
 
     fun setEmail(email: String) {
@@ -50,7 +52,7 @@ class LoginViewModel : ViewModel() {
 
     fun onLoginClicked() {
         viewModelScope.launch(exceptionHandler) {
-            _interaction.emit(LoginAction.Navigate(LoginFragmentDirections.toHomeFragment()))
+            _interaction.emit(LoginAction.Navigate)
         }
     }
 }
@@ -70,5 +72,5 @@ sealed class LoginUiState {
 }
 
 sealed class LoginAction {
-    data class Navigate(val destination: NavDirections) : LoginAction()
+    object Navigate : LoginAction()
 }

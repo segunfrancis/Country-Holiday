@@ -9,11 +9,11 @@ import retrofit2.http.Query
 
 interface CountryHolidayApi {
 
-    @GET("countries")
+   /* @GET("countries")
     suspend fun getCountries(
         @Query("key") apiKey: String = BuildConfig.API_KEY,
         @Query("pretty") isPretty: Boolean = true
-    ): Countries
+    ): Countries*/
 
     @POST("holidays")
     suspend fun getHolidays(
