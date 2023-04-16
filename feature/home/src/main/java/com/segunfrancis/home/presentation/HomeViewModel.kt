@@ -54,4 +54,8 @@ class HomeViewModel @Inject constructor(private val useCase: CountryListUseCase)
         object Loading : HomeState()
         object Idle : HomeState()
     }
+
+    sealed class HomeAction {
+
+    }
 }

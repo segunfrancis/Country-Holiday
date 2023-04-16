@@ -1,4 +1,4 @@
-package com.project.countryholiday.ui.holidays
+package com.segunfrancis.details
 
 import android.os.Bundle
 import android.view.View
@@ -10,12 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.project.countryholiday.R
-import com.project.countryholiday.databinding.FragmentHolidaysBinding
-import com.project.countryholiday.model.Holiday
-import com.project.countryholiday.util.viewBinding
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.segunfrancis.details.databinding.FragmentHolidaysBinding
+import com.segunfrancis.details.model.HolidayHome
+import com.segunfrancis.shared.extension.viewBinding
 import kotlinx.coroutines.launch
 
 /*@AndroidEntryPoint*/
@@ -31,7 +28,7 @@ class HolidayFragment : Fragment(R.layout.fragment_holidays) {
     private val viewModel by viewModels<HolidayViewModel> {
         HolidayViewModel.provideViewModelFactory(
             factory = factory,
-            country = args.country
+            countryCode = args.countryCode
         )
     }
 
@@ -50,7 +47,7 @@ class HolidayFragment : Fragment(R.layout.fragment_holidays) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
                     when (state) {
-                        is HolidayStates.Success -> handleSuccess(state.holidays)
+                        //is HolidayStates.Success -> handleSuccess(state.holidays)
                         is HolidayStates.Error -> handleError(state.error)
                         HolidayStates.Loading -> handleLoading()
                     }
@@ -68,8 +65,8 @@ class HolidayFragment : Fragment(R.layout.fragment_holidays) {
         progressBar.isVisible = true
     }
 
-    private fun handleSuccess(holidays: List<Holiday>) = with(binding) {
-        holidayAdapter.submitList(holidays)
+    private fun handleSuccess(holidayHomes: List<HolidayHome>) = with(binding) {
+        holidayAdapter.submitList(holidayHomes)
         errorGroup.isGone = true
         progressBar.isGone = true
     }

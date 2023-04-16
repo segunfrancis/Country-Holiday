@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.segunfrancis.home.HomeNavigator
 import com.segunfrancis.home.R
 import com.segunfrancis.home.databinding.FragmentHomesBinding
 import com.segunfrancis.home.model.CountryHome
@@ -17,6 +18,7 @@ import com.segunfrancis.shared.extension.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_homes) {
@@ -25,9 +27,11 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
 
     private val viewModel by viewModels<HomeViewModel>()
 
+    @Inject lateinit var homeNavigator: HomeNavigator
+
     private val countryAdapter by lazy {
         CountryAdapter(onItemClick = {
-
+            homeNavigator.toHolidays(this, it)
         })
     }
 
@@ -51,7 +55,7 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
                             setupCountriesList(it.countries)
                             handleLoading(isLoading = false)
                         }
-                        HomeViewModel.HomeState.Idle -> {  }
+                        HomeViewModel.HomeState.Idle -> {}
                     }
                 }
             }

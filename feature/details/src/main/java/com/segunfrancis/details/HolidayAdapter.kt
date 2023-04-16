@@ -1,4 +1,4 @@
-package com.project.countryholiday.ui.holidays
+package com.segunfrancis.details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.project.countryholiday.R
 import com.project.countryholiday.databinding.ItemHolidayBinding
 import com.project.countryholiday.model.Holiday
 
