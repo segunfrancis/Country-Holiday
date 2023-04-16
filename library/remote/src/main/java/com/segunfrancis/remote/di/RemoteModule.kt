@@ -44,10 +44,6 @@ object RemoteModule {
                 chain.proceed(
                     chain.request()
                         .newBuilder()
-                        .addHeader(
-                            name = "Authorization",
-                            value = "Bearer ${BuildConfig.M3O_API_KEY}"
-                        )
                         .build()
                 )
             }

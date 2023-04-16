@@ -82,15 +82,15 @@ class CountryListUseCase @Inject constructor(
     }
 
     private fun CountryRemote.mapToHome(): CountryHome {
-        return CountryHome(code, name)
+        return CountryHome(code, name, flag)
     }
 
     private fun CountryHome.mapToLocal(): CountryLocal {
-        return CountryLocal(code, name)
+        return CountryLocal(code, name, imageUrl)
     }
 
     private fun CountryLocal.mapToHome(): CountryHome {
-        return CountryHome(code, name)
+        return CountryHome(code, name, imageUrl)
     }
 
     sealed class CountryListScenario {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.segunfrancis.home.R
 import com.segunfrancis.home.databinding.ItemCountriesBinding
 import com.segunfrancis.home.model.CountryHome
+import com.segunfrancis.shared.image_utils.loadImage
 
 class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
     ListAdapter<CountryHome, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
@@ -34,7 +35,7 @@ class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
         }
 
         fun bind(country: CountryHome) {
-            binding.countryCode.text = country.code
+            binding.countryImage.loadImage(country.imageUrl)
             binding.countryName.text = country.name
         }
     }

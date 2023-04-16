@@ -2,31 +2,32 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id "dagger.hilt.android.plugin"
 }
 
 def getApiKey() {
     def keysProperties = new Properties()
     keysProperties.load(project.rootProject.file("local.properties").newDataInputStream())
-    def ApiKey = keysProperties.getProperty("m3o_api_key", "")
+    def ApiKey = keysProperties.getProperty("api_key", "")
     return ApiKey
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
-            buildConfigField("String", "M3O_API_KEY", getApiKey())
+            buildConfigField("String", "API_KEY", getApiKey())
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "M3O_API_KEY", getApiKey())
+            buildConfigField("String", "API_KEY", getApiKey())
         }
     }
 }
@@ -43,6 +44,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
     implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
-    implementation "com.google.dagger:hilt-android:2.41"
-    kapt "com.google.dagger:hilt-compiler:2.41"
+    implementation "com.google.dagger:hilt-android:2.45"
+    kapt "com.google.dagger:hilt-compiler:2.45"
 }
