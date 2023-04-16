@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class CountryLocal(
     @PrimaryKey
     val code: String,
-    val name: String
+    val name: String,
+    val imageUrl: String
 )
