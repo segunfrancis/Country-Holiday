@@ -1,8 +1,6 @@
 package com.project.countryholiday
 
-import com.project.countryholiday.model.Country
 import com.segunfrancis.details.model.HolidayHome
-import com.project.countryholiday.model.HolidayRequest
 
 val countries = listOf(
     Country("BZ", "Brazil"),

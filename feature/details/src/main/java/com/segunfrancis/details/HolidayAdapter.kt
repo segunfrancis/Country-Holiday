@@ -2,14 +2,13 @@ package com.segunfrancis.details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.project.countryholiday.databinding.ItemHolidayBinding
-import com.project.countryholiday.model.Holiday
+import com.segunfrancis.details.databinding.ItemHolidayBinding
+import com.segunfrancis.details.model.HolidayHome
 
-class HolidayAdapter : ListAdapter<Holiday, HolidayAdapter.HolidayViewHolder>(DIFF_UTIL) {
+class HolidayAdapter : ListAdapter<HolidayHome, HolidayAdapter.HolidayViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolidayViewHolder {
         return HolidayViewHolder(
@@ -26,27 +25,22 @@ class HolidayAdapter : ListAdapter<Holiday, HolidayAdapter.HolidayViewHolder>(DI
     inner class HolidayViewHolder(private val binding: ItemHolidayBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(holiday: Holiday) = with(binding) {
+        fun bind(holiday: HolidayHome) = with(binding) {
             nameValue.text = holiday.name
-            localNameValue.text = holiday.localName
+            localNameValue.text = holiday.name
             date.text = holiday.date
-            if (holiday.types.isNotEmpty()) {
-                typesValue.text = holiday.types.toString().removeSurrounding("[", "]")
-            } else {
-                typesLabel.isGone = true
-                typesValue.isGone = true
-            }
+            typesValue.text = if (holiday.public) "Public" else "Not public"
             root.setOnClickListener {  }
         }
     }
 
     companion object {
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<Holiday>() {
-            override fun areItemsTheSame(oldItem: Holiday, newItem: Holiday): Boolean {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<HolidayHome>() {
+            override fun areItemsTheSame(oldItem: HolidayHome, newItem: HolidayHome): Boolean {
                 return false
             }
 
-            override fun areContentsTheSame(oldItem: Holiday, newItem: Holiday): Boolean {
+            override fun areContentsTheSame(oldItem: HolidayHome, newItem: HolidayHome): Boolean {
                 return false
             }
         }

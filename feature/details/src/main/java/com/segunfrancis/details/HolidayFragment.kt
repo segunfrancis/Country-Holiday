@@ -13,16 +13,18 @@ import androidx.navigation.fragment.navArgs
 import com.segunfrancis.details.databinding.FragmentHolidaysBinding
 import com.segunfrancis.details.model.HolidayHome
 import com.segunfrancis.shared.extension.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-/*@AndroidEntryPoint*/
+@AndroidEntryPoint
 class HolidayFragment : Fragment(R.layout.fragment_holidays) {
 
     private val binding by viewBinding(FragmentHolidaysBinding::bind)
 
     private val args by navArgs<HolidayFragmentArgs>()
 
-    /*@Inject*/
+    @Inject
     lateinit var factory: HolidayViewModel.HolidayViewModelFactory
 
     private val viewModel by viewModels<HolidayViewModel> {
@@ -47,7 +49,7 @@ class HolidayFragment : Fragment(R.layout.fragment_holidays) {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
                     when (state) {
-                        //is HolidayStates.Success -> handleSuccess(state.holidays)
+                        is HolidayStates.Success -> handleSuccess(state.holidays)
                         is HolidayStates.Error -> handleError(state.error)
                         HolidayStates.Loading -> handleLoading()
                     }

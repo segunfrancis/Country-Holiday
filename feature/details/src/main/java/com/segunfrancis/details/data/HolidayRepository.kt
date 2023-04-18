@@ -11,6 +11,6 @@ class HolidayRepository @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(countryCode: String) = withContext(dispatcher) {
-        remote.getHolidays(countryCode = countryCode, year = "2023")
+        remote.getHolidays(countryCode = countryCode, year = "2022")
     }
 }

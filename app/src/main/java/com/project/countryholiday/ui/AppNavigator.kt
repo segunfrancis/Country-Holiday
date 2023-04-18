@@ -12,7 +12,7 @@ class AppNavigator @Inject constructor() : AuthNavigator, HomeNavigator {
         fragment.findNavController().navigate(NavMainDirections.toHomeFragment())
     }
 
-    override fun toHolidays(fragment: Fragment, countryCode: String) {
-        fragment.findNavController().navigate(NavMainDirections.toDetailsFragment(countryCode))
+    override fun toHolidays(fragment: Fragment, countryCode: String, countryName: String) {
+        fragment.findNavController().navigate(NavMainDirections.toDetailsFragment(countryCode, countryName))
     }
 }

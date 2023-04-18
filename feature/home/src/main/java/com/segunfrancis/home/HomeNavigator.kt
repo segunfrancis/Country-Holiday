@@ -4,5 +4,5 @@ import androidx.fragment.app.Fragment
 
 interface HomeNavigator {
 
-    fun toHolidays(fragment: Fragment, countryCode: String)
+    fun toHolidays(fragment: Fragment, countryCode: String, countryName: String)
 }

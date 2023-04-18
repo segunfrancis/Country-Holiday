@@ -10,7 +10,7 @@ import com.segunfrancis.home.databinding.ItemCountriesBinding
 import com.segunfrancis.home.model.CountryHome
 import com.segunfrancis.shared.image_utils.loadImage
 
-class CountryAdapter(private val onItemClick: (String) -> Unit) :
+class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
     ListAdapter<CountryHome, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
@@ -31,7 +31,7 @@ class CountryAdapter(private val onItemClick: (String) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { onItemClick.invoke(currentList[adapterPosition].code) }
+            binding.root.setOnClickListener { onItemClick.invoke(currentList[adapterPosition]) }
         }
 
         fun bind(country: CountryHome) {

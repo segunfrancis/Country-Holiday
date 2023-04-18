@@ -10,8 +10,12 @@
         android:name="com.segunfrancis.details.HolidayFragment"
         android:label="fragment_holidays"
         tools:layout="@layout/fragment_holidays" >
-        <argument
+
+       <argument
             android:name="countryCode"
+            app:argType="string" />
+        <argument
+            android:name="countryName"
             app:argType="string" />
     </fragment>
 </navigation>

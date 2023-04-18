@@ -18,5 +18,8 @@
         <argument
             android:name="countryCode"
             app:argType="string" />
+        <argument
+            android:name="countryName"
+            app:argType="string" />
     </action>
 </navigation>
