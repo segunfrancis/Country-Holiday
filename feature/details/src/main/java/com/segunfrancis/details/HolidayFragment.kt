@@ -1,4 +1,4 @@
-package com.project.countryholiday.ui.holidays
+package com.segunfrancis.details
 
 import android.os.Bundle
 import android.view.View
@@ -10,28 +10,27 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.project.countryholiday.R
-import com.project.countryholiday.databinding.FragmentHolidaysBinding
-import com.project.countryholiday.model.Holiday
-import com.project.countryholiday.util.viewBinding
+import com.segunfrancis.details.databinding.FragmentHolidaysBinding
+import com.segunfrancis.details.model.HolidayHome
+import com.segunfrancis.shared.extension.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-/*@AndroidEntryPoint*/
+@AndroidEntryPoint
 class HolidayFragment : Fragment(R.layout.fragment_holidays) {
 
     private val binding by viewBinding(FragmentHolidaysBinding::bind)
 
     private val args by navArgs<HolidayFragmentArgs>()
 
-    /*@Inject*/
+    @Inject
     lateinit var factory: HolidayViewModel.HolidayViewModelFactory
 
     private val viewModel by viewModels<HolidayViewModel> {
         HolidayViewModel.provideViewModelFactory(
             factory = factory,
-            country = args.country
+            countryCode = args.countryCode
         )
     }
 
@@ -68,8 +67,8 @@ class HolidayFragment : Fragment(R.layout.fragment_holidays) {
         progressBar.isVisible = true
     }
 
-    private fun handleSuccess(holidays: List<Holiday>) = with(binding) {
-        holidayAdapter.submitList(holidays)
+    private fun handleSuccess(holidayHomes: List<HolidayHome>) = with(binding) {
+        holidayAdapter.submitList(holidayHomes)
         errorGroup.isGone = true
         progressBar.isGone = true
     }

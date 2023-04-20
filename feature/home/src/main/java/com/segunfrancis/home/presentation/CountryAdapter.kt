@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.segunfrancis.home.R
 import com.segunfrancis.home.databinding.ItemCountriesBinding
 import com.segunfrancis.home.model.CountryHome
-import com.segunfrancis.shared.image_utils.loadImage
+import com.segunfrancis.shared.image_utils.ImageLoadingUtils
 
-class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
-    ListAdapter<CountryHome, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
+class CountryAdapter(
+    private val onItemClick: (CountryHome) -> Unit,
+    private val imageLoadingUtils: ImageLoadingUtils
+) : ListAdapter<CountryHome, CountryAdapter.CountryViewHolder>(DIFF_UTIL) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
         return CountryViewHolder(
@@ -35,7 +37,7 @@ class CountryAdapter(private val onItemClick: (CountryHome) -> Unit) :
         }
 
         fun bind(country: CountryHome) {
-            binding.countryImage.loadImage(country.imageUrl)
+            imageLoadingUtils.loadImage(binding.countryImage, country.imageUrl)
             binding.countryName.text = country.name
         }
     }

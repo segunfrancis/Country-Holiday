@@ -1,13 +1,12 @@
-package com.project.countryholiday.ui.holidays
+package com.segunfrancis.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.project.countryholiday.model.Country
-import com.project.countryholiday.model.Holiday
-import com.project.countryholiday.model.HolidayRequest
-import com.project.countryholiday.repository.HolidayRepository
-import com.project.countryholiday.util.handleThrowable
+import com.segunfrancis.details.data.HolidayRepository
+import com.segunfrancis.details.model.HolidayHome
+import com.segunfrancis.remote.models.HolidayRemote
+import com.segunfrancis.shared.extension.handleThrowable
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -17,25 +16,25 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class HolidayViewModel /*@AssistedInject*/ constructor(
+class HolidayViewModel @AssistedInject constructor(
     private val repository: HolidayRepository,
-    /*@Assisted*/ private val country: Country
+    @Assisted private val countryCode: String
 ) : ViewModel() {
 
-    /*@AssistedFactory*/
+    @AssistedFactory
     interface HolidayViewModelFactory {
-        fun create(country: Country): HolidayViewModel
+        fun create(countryCode: String): HolidayViewModel
     }
 
     @Suppress("UNCHECKED_CAST")
     companion object {
         fun provideViewModelFactory(
             factory: HolidayViewModelFactory,
-            country: Country
+            countryCode: String
         ): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return factory.create(country) as T
+                    return factory.create(countryCode) as T
                 }
             }
     }
@@ -55,15 +54,18 @@ class HolidayViewModel /*@AssistedInject*/ constructor(
     fun getHolidays() {
         _uiState.value = HolidayStates.Loading
         viewModelScope.launch(exceptionHandler) {
-            val holidays =
-                repository.getHolidays(HolidayRequest(countryCode = country.code)).holidays
-            _uiState.value = HolidayStates.Success(holidays)
+            val holidays = repository(countryCode).holidays
+            _uiState.value = HolidayStates.Success(holidays.map { it.toHolidayHome() })
         }
+    }
+
+    private fun HolidayRemote.toHolidayHome(): HolidayHome {
+        return HolidayHome(id, date, name, public)
     }
 }
 
 sealed class HolidayStates {
     object Loading : HolidayStates()
     data class Error(val error: String) : HolidayStates()
-    data class Success(val holidays: List<Holiday>) : HolidayStates()
+    data class Success(val holidays: List<HolidayHome>) : HolidayStates()
 }

@@ -1,8 +1,6 @@
 package com.project.countryholiday
 
-import com.project.countryholiday.model.Country
-import com.project.countryholiday.model.Holiday
-import com.project.countryholiday.model.HolidayRequest
+import com.segunfrancis.details.model.HolidayHome
 
 val countries = listOf(
     Country("BZ", "Brazil"),
@@ -13,8 +11,8 @@ val country = Country("US", "United States of America")
 
 val holidayRequest = HolidayRequest(countryCode = "US")
 
-val holidayResponse = listOf(
-    Holiday(
+val holidayHomeResponse = listOf(
+    HolidayHome(
         countryCode = "US",
         date = "2022-12-25",
         localName = "Christmas Day",

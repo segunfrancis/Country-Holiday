@@ -4,9 +4,11 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.project.countryholiday.country
 import com.project.countryholiday.holidayRequest
-import com.project.countryholiday.holidayResponse
+import com.project.countryholiday.holidayHomeResponse
 import com.project.countryholiday.model.BaseHolidayResponse
 import com.project.countryholiday.repository.HolidayRepository
+import com.segunfrancis.details.HolidayStates
+import com.segunfrancis.details.HolidayViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -20,7 +22,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class HolidayViewModelTest {
+class HolidayHomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private val testScope = TestScope(context = testDispatcher)
@@ -34,7 +36,7 @@ class HolidayViewModelTest {
     fun getHolidaysTest() = testScope.runTest {
         val mockRepo = mock<HolidayRepository> {
             onBlocking { getHolidays(params = holidayRequest) } doReturn BaseHolidayResponse(
-                holidays = holidayResponse
+                holidayHomes = holidayHomeResponse
             )
         }
 

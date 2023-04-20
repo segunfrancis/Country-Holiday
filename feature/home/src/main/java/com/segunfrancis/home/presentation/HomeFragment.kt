@@ -10,13 +10,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.segunfrancis.home.HomeNavigator
 import com.segunfrancis.home.R
 import com.segunfrancis.home.databinding.FragmentHomesBinding
 import com.segunfrancis.home.model.CountryHome
+import com.segunfrancis.home.presentation.HomeViewModel.*
 import com.segunfrancis.shared.extension.viewBinding
+import com.segunfrancis.shared.image_utils.ImageLoadingUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_homes) {
@@ -25,16 +29,22 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
 
     private val viewModel by viewModels<HomeViewModel>()
 
+    @Inject lateinit var homeNavigator: HomeNavigator
+
+    @Inject lateinit var imageLoadingUtils: ImageLoadingUtils
+
     private val countryAdapter by lazy {
         CountryAdapter(onItemClick = {
-
-        })
+            homeNavigator.toHolidays(this, it.code, it.name)
+        }, imageLoadingUtils = imageLoadingUtils)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupObservers()
+        setupRecyclerView()
+        setupClickListeners()
     }
 
     private fun setupObservers() {
@@ -42,16 +52,16 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest {
                     when (it) {
-                        is HomeViewModel.HomeState.Error -> {
+                        is HomeState.Error -> {
                             handleError(errorMessage = it.errorMessage)
                             handleLoading(isLoading = false)
                         }
-                        HomeViewModel.HomeState.Loading -> handleLoading(isLoading = true)
-                        is HomeViewModel.HomeState.Success -> {
+                        HomeState.Loading -> handleLoading(isLoading = true)
+                        is HomeState.Success -> {
                             setupCountriesList(it.countries)
                             handleLoading(isLoading = false)
                         }
-                        HomeViewModel.HomeState.Idle -> {  }
+                        HomeState.Idle -> {}
                     }
                 }
             }
@@ -59,10 +69,10 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
     }
 
     private fun setupClickListeners() {
-        binding.retryButton.setOnClickListener { /*viewModel.getCountries()*/ }
+        binding.retryButton.setOnClickListener { viewModel.getCountries() }
     }
 
-    private fun setupCountriesList(countries: List<CountryHome>) {
+    private fun setupRecyclerView() {
         binding.countriesList.apply {
             adapter = countryAdapter
             addItemDecoration(
@@ -72,6 +82,9 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
                 )
             )
         }
+    }
+
+    private fun setupCountriesList(countries: List<CountryHome>) {
         countryAdapter.submitList(countries)
         binding.progressBar.isGone = true
         binding.errorGroup.isGone = true

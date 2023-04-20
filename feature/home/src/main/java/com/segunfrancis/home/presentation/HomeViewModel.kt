@@ -18,15 +18,18 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val useCase: CountryListUseCase) : ViewModel() {
-
     private val _uiState = MutableStateFlow<HomeState>(HomeState.Idle)
-    val uiState = _uiState.asStateFlow()
 
+    val uiState = _uiState.asStateFlow()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         _uiState.update { HomeState.Error(throwable.localizedMessage) }
     }
 
     init {
+        getCountries()
+    }
+
+    fun getCountries() {
         viewModelScope.launch(exceptionHandler) {
             useCase()
                 .catch { error ->

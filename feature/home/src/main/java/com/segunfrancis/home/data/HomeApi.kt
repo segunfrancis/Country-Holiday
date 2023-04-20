@@ -1,12 +1,11 @@
 package com.segunfrancis.home.data
 
 import com.segunfrancis.remote.BuildConfig
-import com.segunfrancis.remote.api.CountryHolidayApi
 import com.segunfrancis.remote.models.Countries
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface HomeApi : CountryHolidayApi {
+interface HomeApi {
 
     @GET("countries")
     suspend fun getCountries(
