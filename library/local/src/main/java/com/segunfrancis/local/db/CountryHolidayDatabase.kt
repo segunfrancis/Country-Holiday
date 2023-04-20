@@ -16,15 +16,21 @@ abstract class CountryHolidayDatabase : RoomDatabase() {
     abstract fun getDao(): CountryHolidayDao
 
     companion object {
+
+        @Volatile
+        var INSTANCE: CountryHolidayDatabase? = null
         fun getDatabase(context: Context): CountryHolidayDatabase? {
             return try {
-                Room.databaseBuilder(
-                    context,
-                    CountryHolidayDatabase::class.java,
-                    "country_holiday_database"
-                )
-                    .addMigrations(migration_1_2)
-                    .build()
+                INSTANCE ?: synchronized(this) {
+                    INSTANCE = Room.databaseBuilder(
+                        context,
+                        CountryHolidayDatabase::class.java,
+                        "country_holiday_database"
+                    )
+                        .addMigrations(migration_1_2)
+                        .build()
+                    INSTANCE
+                }
             } catch (e: Throwable) {
                 null
             }

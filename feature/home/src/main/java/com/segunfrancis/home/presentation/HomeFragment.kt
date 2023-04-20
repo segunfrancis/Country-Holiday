@@ -16,6 +16,7 @@ import com.segunfrancis.home.databinding.FragmentHomesBinding
 import com.segunfrancis.home.model.CountryHome
 import com.segunfrancis.home.presentation.HomeViewModel.*
 import com.segunfrancis.shared.extension.viewBinding
+import com.segunfrancis.shared.image_utils.ImageLoadingUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,10 +31,12 @@ class HomeFragment : Fragment(R.layout.fragment_homes) {
 
     @Inject lateinit var homeNavigator: HomeNavigator
 
+    @Inject lateinit var imageLoadingUtils: ImageLoadingUtils
+
     private val countryAdapter by lazy {
         CountryAdapter(onItemClick = {
             homeNavigator.toHolidays(this, it.code, it.name)
-        })
+        }, imageLoadingUtils = imageLoadingUtils)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
